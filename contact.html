@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Autobotexpert Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1.2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        
+        nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #667eea;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-btns {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+        
+        .btn-login {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-login:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .btn-signup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        .mobile-nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 999;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .mobile-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.3s;
+        }
+        
+        .mobile-nav a:hover {
+            color: #667eea;
+        }
+        
+        .mobile-auth-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .hero-section {
+            padding: 10rem 6% 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .hero-section h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-section p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 6%;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .info-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .info-card.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .info-card:hover {
+            transform: translateX(10px);
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .info-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .info-content p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        
+        .support-hours {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .support-hours.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .support-hours h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .hours-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-item span:first-child {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .hours-item span:last-child {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .contact-form {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            padding: 3.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .contact-form.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .contact-form h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1.4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .ai-support-banner {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.1));
+            padding: 2rem 6%;
+            margin: 4rem 6%;
+            border-radius: 24px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .ai-support-banner.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .ai-icon-large {
+            font-size: 4rem;
+        }
+        
+        .ai-support-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .ai-support-content p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .faq-section {
+            padding: 6rem 6%;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-header.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .faq-item.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .faq-question:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .faq-toggle {
+            width: 30px;
+            height: 30px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 2rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 2rem 2rem;
+        }
+        
+        .social-section {
+            padding: 4rem 6%;
+            text-align: center;
+        }
+        
+        .social-section h3 {
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .social-link.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-8px);
+            border-color: transparent;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        footer {
+            background: rgba(10, 14, 39, 0.5);
+            padding: 3rem 6%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.1); opacity: 0.25; }
+        }
+        
+        @media (max-width: 1200px) {
+            .contact-container { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 1024px) {
+            .form-row { grid-template-columns: 1fr; }
+            .ai-support-banner { flex-direction: column; text-align: center; }
+        }
+        
+        @media (max-width: 768px) {
+            nav, .auth-btns { display: none; }
+            .hamburger { display: flex; }
+            .hero-section h1 { font-size: 2.5rem; }
+            .contact-form { padding: 2.5rem; }
+            .info-card { padding: 2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-section { padding: 8rem 6% 3rem; }
+            .hero-section h1 { font-size: 2rem; }
+            .hero-section p { font-size: 1.1rem; }
+            .contact-form h2 { font-size: 1.8rem; }
+            .section-header h2 { font-size: 2.2rem; }
+            .ai-support-banner { padding: 1.5rem; }
+            .social-link { width: 60px; height: 60px; font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"> <img src = "autobot-logo.png" alt ="" style = width:3em />
+        <nav>
+          <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="policy.html">Legal</a>
+        </nav>
+        <div class="auth-btns">
+            <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
+            <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav">
+          <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="policy.html">Legal</a>
+        <div class="mobile-auth-btns">
+            <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
+            <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <h1>Get In <span class="gradient-text">Touch</span></h1>
+        <p>Our expert support team is available 24/7 to assist you with trading, AI bot setup, technical issues, and account management. We typically respond within 2 hours.</p>
+    </section>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="info-card">
+                <div class="info-icon">📧</div>
+                <div class="info-content">
+                    <h4>Email Support</h4>
+                    <p>support@Autobotexpert.com<br>
+                    ai-support@Autobotexpert.com<br>
+                    partnerships@Autobotexpert.com</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-icon">💬</div>
+                <div class="info-content">
+                    <h4>Live Chat</h4>
+                    <p>Instant support available 24/7<br>
+                    Average response time: 2 minutes<br>
+                    AI chatbot + human agents</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-icon">📞</div>
+                <div class="info-content">
+                    <h4>Phone Support</h4>
+                    <p>+1 (555) 123-4567 (US/Canada)<br>
+                    +44 20 7946 0958 (UK/Europe)<br>
+                    +65 6018 7777 (Asia Pacific)</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-icon">📍</div>
+                <div class="info-content">
+                    <h4>Headquarters</h4>
+                    <p>Autobotexpert Global Inc.<br>
+                    123 Blockchain Avenue<br>
+                    San Francisco, CA 94102, USA</p>
+                </div>
+            </div>
+            
+            <div class="support-hours">
+                <h3>Support Availability</h3>
+                <div class="hours-list">
+                    <div class="hours-item">
+                        <span>Live Chat</span>
+                        <span>24/7 Available</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>Email Support</span>
+                        <span>24/7 Available</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>Phone Support</span>
+                        <span>24/7 Available</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>AI Bot Assistance</span>
+                        <span>Instant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-form">
+            <h2>Send Us A <span class="gradient-text">Message</span></h2>
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="John" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Doe" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john.doe@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number (Optional)</label>
+                    <input type="tel" placeholder="+1 (555) 123-4567">
+                </div>
+                
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select required>
+                        <option value="">Select a topic</option>
+                        <option>AI Trading Bot Setup</option>
+                        <option>Account Verification</option>
+                        <option>Trading Issues</option>
+                        <option>Deposit/Withdrawal</option>
+                        <option>Technical Support</option>
+                        <option>Partnership Inquiry</option>
+                        <option>API Integration</option>
+                        <option>General Question</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Please provide details about your inquiry. For AI bot issues, include your bot settings and error messages..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="ai-support-banner">
+        <div class="ai-icon-large">🤖</div>
+        <div class="ai-support-content">
+            <h3>AI-Powered Instant Support</h3>
+            <p>Our intelligent chatbot can instantly help you with common questions about trading, AI bot configuration, account settings, and troubleshooting. Get answers in seconds without waiting for human agents.</p>
+        </div>
+    </div>
+
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+            <p>Quick answers to common questions about our platform and AI trading</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I set up an AI trading bot?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Navigate to the AI Trading section in your dashboard, choose a strategy (DCA, Grid, Arbitrage), set your parameters (investment amount, risk level, target coins), and activate the bot. Our AI will execute trades automatically 24/7 based on market conditions.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How long does account verification take?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Standard verification typically takes 10-30 minutes using our AI-powered verification system. Enhanced verification for higher limits may take 24-48 hours. You'll receive an email notification once approved.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What are your trading fees?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Our fees start at 0.1% per trade for regular trading. AI bot trades have the same fee structure. We offer volume-based discounts: 0.08% for traders with $100K+ monthly volume, and 0.05% for institutional traders with $1M+ monthly volume.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Are my funds safe with AI trading bots?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Yes! Your funds remain in your account at all times. AI bots only execute trades—they cannot withdraw funds. You maintain full control and can stop any bot instantly. We also implement stop-loss mechanisms and risk management protocols to protect your capital.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I customize my AI trading strategy?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! Our advanced users can create custom strategies using our Strategy Builder. Set your own indicators, conditions, risk parameters, and backtesting periods. You can also clone and modify existing high-performing strategies from our marketplace.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What happens if the AI makes a wrong prediction?</span>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    Our AI uses advanced risk management including automatic stop-losses, position sizing, and diversification. While no system is perfect, our algorithms are designed to minimize losses and protect your capital. You can also set maximum loss limits per trade or per day.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-section">
+        <h3>Connect With <span class="gradient-text">Us</span></h3>
+        <div class="social-links">
+            <div class="social-link" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="social-link" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div class="social-link" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </div>
+            <div class="social-link" title="Telegram">
+                <i class="fab fa-telegram-plane"></i>
+            </div>
+            <div class="social-link" title="Discord">
+                <i class="fab fa-discord"></i>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Autobotexpert. All rights reserved. | AI-Powered Trading Platform</p>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+        
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+        
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.info-card, .support-hours, .contact-form, .section-header, .faq-item, .ai-support-banner, .social-link');
+            
+            elements.forEach((element, index) => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    // Add staggered delay for social links
+                    if (element.classList.contains('social-link')) {
+                        setTimeout(() => {
+                            element.classList.add('animated');
+                        }, index * 100);
+                    } else {
+                        element.classList.add('animated');
+                    }
+                }
+            });
+        };
+        
+        // Initial check for elements in view
+        animateOnScroll();
+        
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 14, 39, 0.98)';
+                header.style.padding = '0.8rem 6%';
+            } else {
+                header.style.background = 'rgba(10, 14, 39, 0.95)';
+                header.style.padding = '1.2rem 6%';
+            }
+        });
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for contacting us! Our team will respond within 2 hours. For urgent matters, please use our live chat.');
+            e.target.reset();
+        });
+        
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
