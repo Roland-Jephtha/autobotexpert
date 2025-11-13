@@ -895,6 +895,95 @@
             font-size: 0.9rem;
         }
         
+        /* TradingView Chart Section */
+        .tradingview-section {
+            padding: 6rem 6%;
+            background: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tradingview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .tradingview-header {
+            padding: 1.5rem 2rem;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tradingview-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .timeframes {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .timeframe-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .timeframe-btn:hover,
+        .timeframe-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+        }
+        
+        .tradingview-chart {
+            height: 500px;
+            background: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(102, 126, 234, 0.05) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(102, 126, 234, 0.05) 50%, transparent 51%);
+            background-size: 40px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+        
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .chart-placeholder p {
+            font-size: 1.1rem;
+        }
+        
         /* Investment Popup Styles */
         .investment-popup {
             position: fixed;
@@ -1160,6 +1249,9 @@
                 bottom: 10px;
                 max-width: 280px;
             }
+            .tradingview-chart {
+                height: 400px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1174,11 +1266,18 @@
             .investment-popup {
                 max-width: 250px;
             }
+            .tradingview-chart {
+                height: 350px;
+            }
+            .timeframes {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
         
         @media (max-width: 480px) {
             header { padding: 1rem 4%; }
-            .hero, .features-section, .testimonials, .stats-section {
+            .hero, .features-section, .testimonials, .stats-section, .tradingview-section {
                 padding-left: 4%;
                 padding-right: 4%;
             }
@@ -1188,6 +1287,9 @@
             .investment-popup {
                 max-width: 220px;
                 padding: 10px 15px;
+            }
+            .tradingview-chart {
+                height: 300px;
             }
         }
     </style>
@@ -1402,6 +1504,147 @@
         </div>
     </section>
 
+<!-- Add this to your <head> section -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+<!-- TradingView Chart Section -->
+<section class="tradingview-section">
+    <div class="section-header">
+        <h2>Live Market <span class="gradient-text">Charts</span></h2>
+        <p>Professional trading charts with real-time data and advanced technical analysis</p>
+    </div>
+    
+    <div class="tradingview-container">
+        <div class="tradingview-header">
+            <h3>BTC/USDT Chart</h3>
+            <div class="timeframes">
+                <button class="timeframe-btn active" data-timeframe="60">1H</button>
+                <button class="timeframe-btn" data-timeframe="240">4H</button>
+                <button class="timeframe-btn" data-timeframe="1D">1D</button>
+                <button class="timeframe-btn" data-timeframe="1W">1W</button>
+                <button class="timeframe-btn" data-timeframe="1M">1M</button>
+            </div>
+        </div>
+        <div class="tradingview-chart">
+            <div class="tradingview-widget-container">
+                <div id="tradingview_chart"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // TradingView Chart Integration
+    function initTradingViewChart(timeframe = '60') {
+        // Check if TradingView is loaded
+        if (typeof TradingView === 'undefined') {
+            console.error('TradingView widget not loaded');
+            return;
+        }
+        
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": timeframe,
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#0a0e27",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "container_id": "tradingview_chart",
+            "studies": [
+                "RSI@tv-basicstudies",
+                "MACD@tv-basicstudies"
+            ],
+            "overrides": {
+                "paneProperties.background": "#0f172a",
+                "paneProperties.vertGridProperties.color": "rgba(102, 126, 234, 0.1)",
+                "paneProperties.horzGridProperties.color": "rgba(102, 126, 234, 0.1)",
+                "symbolWatermarkProperties.transparency": 90,
+                "scalesProperties.textColor" : "#a0a6c9",
+                "mainSeriesProperties.candleStyle.upColor": "#10b981",
+                "mainSeriesProperties.candleStyle.downColor": "#ef4444",
+                "mainSeriesProperties.candleStyle.borderUpColor": "#10b981",
+                "mainSeriesProperties.candleStyle.borderDownColor": "#ef4444",
+                "mainSeriesProperties.candleStyle.wickUpColor": "#10b981",
+                "mainSeriesProperties.candleStyle.wickDownColor": "#ef4444"
+            },
+            "studies_overrides": {
+                "rsi.display": "line",
+                "rsi.linecolor": "#667eea"
+            }
+        });
+    }
+
+    // Initialize TradingView chart when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+        // Wait for TradingView to load
+        if (typeof TradingView !== 'undefined') {
+            initTradingViewChart();
+        } else {
+            // If not loaded, wait a bit and try again
+            setTimeout(() => {
+                if (typeof TradingView !== 'undefined') {
+                    initTradingViewChart();
+                } else {
+                    console.error('TradingView failed to load');
+                }
+            }, 1000);
+        }
+    });
+
+    // Timeframe buttons functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeframeButtons = document.querySelectorAll('.timeframe-btn');
+        timeframeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get timeframe from data attribute
+                const timeframe = this.getAttribute('data-timeframe');
+                
+                // Reinitialize chart with new timeframe
+                initTradingViewChart(timeframe);
+            });
+        });
+    });
+</script>
+
+<style>
+.tradingview-widget-container {
+    height: 100%;
+    width: 100%;
+}
+
+#tradingview_chart {
+    height: 100%;
+    width: 100%;
+    min-height: 400px;
+}
+
+/* Make sure the chart container has proper dimensions */
+.tradingview-chart {
+    height: 500px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .tradingview-chart {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tradingview-chart {
+        height: 300px;
+    }
+}
+</style>
+
+
     <section class="testimonials">
         <div class="section-header">
             <h2>What Our <span class="gradient-text">Investors Say</span></h2>
@@ -1498,35 +1741,57 @@
             observer.observe(card);
         });
         
-        // Dynamic price updates for the trading interface
-        function updateTradingData() {
-            const priceElement = document.querySelector('.price-display');
-            const changeElement = document.querySelector('.change-up');
-            const volumeElement = document.querySelector('.data-value');
-            
-            // Simulate price fluctuations
-            const basePrice = 57423.86;
-            const randomChange = (Math.random() - 0.5) * 1000;
-            const newPrice = basePrice + randomChange;
-            const percentChange = (randomChange / basePrice * 100).toFixed(2);
-            
-            priceElement.textContent = `$${newPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            
-            if (randomChange >= 0) {
-                changeElement.textContent = `+${percentChange}%`;
-                changeElement.className = 'change-up';
-            } else {
-                changeElement.textContent = `${percentChange}%`;
-                changeElement.className = 'change-down';
+        // Real Bitcoin Price Data (using CoinGecko API)
+        async function fetchBitcoinPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true');
+                const data = await response.json();
+                
+                if (data.bitcoin) {
+                    const btcData = data.bitcoin;
+                    const priceElement = document.getElementById('phonePrice');
+                    const changeElement = document.getElementById('phoneChange');
+                    const changePercentElement = document.getElementById('phoneChangePercent');
+                    const volumeElement = document.getElementById('phoneVolume');
+                    
+                    // Format numbers
+                    const formattedPrice = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).format(btcData.usd);
+                    
+                    const formattedChange = btcData.usd_24h_change.toFixed(2);
+                    const formattedVolume = (btcData.usd_24h_vol / 1000000000).toFixed(1) + 'B';
+                    
+                    // Update elements
+                    priceElement.textContent = formattedPrice;
+                    
+                    if (btcData.usd_24h_change >= 0) {
+                        changeElement.textContent = `+${formattedChange}%`;
+                        changeElement.className = 'change-up';
+                        changePercentElement.textContent = `+${formattedChange}%`;
+                        changePercentElement.className = 'data-value change-up';
+                    } else {
+                        changeElement.textContent = `${formattedChange}%`;
+                        changeElement.className = 'change-down';
+                        changePercentElement.textContent = `${formattedChange}%`;
+                        changePercentElement.className = 'data-value change-down';
+                    }
+                    
+                    volumeElement.textContent = formattedVolume;
+                }
+            } catch (error) {
+                console.error('Error fetching Bitcoin price:', error);
+                // Fallback to simulated data if API fails
+                updateTradingData();
             }
-            
-            // Update volume with random value
-            const volume = (2.4 + Math.random() * 0.5).toFixed(1);
-            volumeElement.textContent = `${volume}B`;
         }
         
-        // Update trading data every 3 seconds
-        setInterval(updateTradingData, 3000);
+        // Update Bitcoin price every 10 seconds
+        fetchBitcoinPrice();
+        setInterval(fetchBitcoinPrice, 10000);
         
         // Add click effects to trading buttons
         document.querySelectorAll('.btn-buy, .btn-sell').forEach(button => {
@@ -1538,7 +1803,7 @@
             });
         });
 
-        // Investment Popup System
+        // Investment Popup System with 30 different investors
         const investmentPopup = document.getElementById('investmentPopup');
         const popupClose = document.getElementById('popupClose');
         const popupAvatar = document.getElementById('popupAvatar');
@@ -1546,14 +1811,38 @@
         const popupAmount = document.getElementById('popupAmount');
         const popupTime = document.getElementById('popupTime');
 
-        // Sample data for investment popups
+        // 30 different investors with realistic names
         const investors = [
-            { name: 'John Doe', avatar: 'JD', amount: '$20,000', time: '2 minutes ago' },
-            { name: 'Sarah Wilson', avatar: 'SW', amount: '$15,500', time: '5 minutes ago' },
-            { name: 'Mike Chen', avatar: 'MC', amount: '$32,000', time: '8 minutes ago' },
-            { name: 'Emma Rodriguez', avatar: 'ER', amount: '$12,750', time: '12 minutes ago' },
-            { name: 'Alex Thompson', avatar: 'AT', amount: '$25,300', time: '15 minutes ago' },
-            { name: 'Lisa Zhang', avatar: 'LZ', amount: '$18,900', time: '20 minutes ago' }
+            { name: 'James Wilson', avatar: 'JW', amount: '$20,000', time: '2 minutes ago' },
+            { name: 'Sarah Chen', avatar: 'SC', amount: '$15,500', time: '5 minutes ago' },
+            { name: 'Michael Rodriguez', avatar: 'MR', amount: '$32,000', time: '8 minutes ago' },
+            { name: 'Emma Thompson', avatar: 'ET', amount: '$12,750', time: '12 minutes ago' },
+            { name: 'Alex Johnson', avatar: 'AJ', amount: '$25,300', time: '15 minutes ago' },
+            { name: 'Lisa Zhang', avatar: 'LZ', amount: '$18,900', time: '20 minutes ago' },
+            { name: 'David Kim', avatar: 'DK', amount: '$28,400', time: '25 minutes ago' },
+            { name: 'Olivia Martinez', avatar: 'OM', amount: '$14,200', time: '30 minutes ago' },
+            { name: 'Daniel Brown', avatar: 'DB', amount: '$22,100', time: '35 minutes ago' },
+            { name: 'Sophia Garcia', avatar: 'SG', amount: '$19,800', time: '40 minutes ago' },
+            { name: 'William Lee', avatar: 'WL', amount: '$31,500', time: '45 minutes ago' },
+            { name: 'Isabella Wang', avatar: 'IW', amount: '$16,700', time: '50 minutes ago' },
+            { name: 'Ethan Davis', avatar: 'ED', amount: '$24,900', time: '55 minutes ago' },
+            { name: 'Mia Anderson', avatar: 'MA', amount: '$13,400', time: '1 hour ago' },
+            { name: 'Noah Taylor', avatar: 'NT', amount: '$27,600', time: '1 hour ago' },
+            { name: 'Charlotte Harris', avatar: 'CH', amount: '$21,300', time: '1 hour ago' },
+            { name: 'Liam Martin', avatar: 'LM', amount: '$29,800', time: '1 hour ago' },
+            { name: 'Amelia White', avatar: 'AW', amount: '$17,500', time: '1 hour ago' },
+            { name: 'Lucas Clark', avatar: 'LC', amount: '$23,700', time: '1 hour ago' },
+            { name: 'Harper Lewis', avatar: 'HL', amount: '$26,200', time: '1 hour ago' },
+            { name: 'Benjamin Walker', avatar: 'BW', amount: '$30,900', time: '1 hour ago' },
+            { name: 'Evelyn Hall', avatar: 'EH', amount: '$14,800', time: '1 hour ago' },
+            { name: 'Henry Allen', avatar: 'HA', amount: '$19,100', time: '1 hour ago' },
+            { name: 'Abigail Young', avatar: 'AY', amount: '$22,500', time: '1 hour ago' },
+            { name: 'Alexander King', avatar: 'AK', amount: '$28,700', time: '1 hour ago' },
+            { name: 'Ella Wright', avatar: 'EW', amount: '$16,300', time: '1 hour ago' },
+            { name: 'Sebastian Scott', avatar: 'SS', amount: '$24,100', time: '1 hour ago' },
+            { name: 'Grace Green', avatar: 'GG', amount: '$27,900', time: '1 hour ago' },
+            { name: 'Jack Adams', avatar: 'JA', amount: '$20,600', time: '1 hour ago' },
+            { name: 'Chloe Baker', avatar: 'CB', amount: '$18,400', time: '1 hour ago' }
         ];
 
         // Show investment popup
@@ -1650,6 +1939,14 @@
         
         // Update ticker prices every 5 seconds
         setInterval(updateTickerPrices, 5000);
+
+        // Timeframe buttons functionality
+        document.querySelectorAll('.timeframe-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
