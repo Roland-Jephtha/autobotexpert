@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autobotexpert - Professional Crypto Trading Platform</title>
+    <title>Autobotexpert - Professional Investment Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -12,13 +12,33 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0e27;
-            color: #fff;
-            overflow-x: hidden;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            --dark-bg: #0a0e27;
+            --darker-bg: #05071e;
+            --card-bg: #1a1f3d;
+            --card-hover: #22284a;
+            --text-primary: #f0f2ff;
+            --text-secondary: #a0a6c9;
+            --accent: #667eea;
+            --accent-hover: #5568d3;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --glow: rgba(102, 126, 234, 0.3);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
         
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Keep your existing navbar styles - they're perfect! */
         header {
             position: fixed;
             top: 0;
@@ -26,21 +46,46 @@
             background: rgba(10, 14, 39, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
-            padding: 1.2rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 6%;
+            box-shadow: 0 2px 20px var(--shadow);
             transition: all 0.3s ease;
         }
         
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
         .logo {
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo img {
+            width: 3em;
+            height: auto;
+            filter: brightness(0) invert(1);
+            transition: all 0.5s ease;
+        }
+        
+        .logo:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--accent));
+            transform: rotate(5deg);
         }
         
         nav {
@@ -50,26 +95,28 @@
         }
         
         nav a {
-            color: rgba(255,255,255,0.8);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.3s;
             position: relative;
+            padding: 0.5rem 0;
         }
         
         nav a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--accent);
             transition: width 0.3s ease;
         }
         
         nav a:hover {
-            color: #667eea;
+            color: var(--accent);
         }
         
         nav a:hover::after {
@@ -79,60 +126,68 @@
         .auth-btns {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
         
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 0.75rem 1.8rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .btn-login {
             background: transparent;
-            color: #fff;
-            border: 2px solid rgba(102, 126, 234, 0.5);
+            color: var(--accent);
+            border: 2px solid var(--accent);
         }
         
         .btn-login:hover {
             background: rgba(102, 126, 234, 0.1);
-            border-color: #667eea;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--glow);
         }
         
         .btn-signup {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px var(--glow);
         }
         
         .btn-signup:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 25px var(--glow);
         }
         
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 4px;
+            gap: 5px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .hamburger:hover {
+            background: rgba(102, 126, 234, 0.1);
         }
         
         .hamburger span {
-            width: 25px;
+            width: 28px;
             height: 3px;
-            background: #fff;
-            border-radius: 2px;
+            background: var(--accent);
+            border-radius: 3px;
             transition: all 0.3s ease;
         }
         
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(8px, 8px);
         }
         
         .hamburger.active span:nth-child(2) {
@@ -140,47 +195,62 @@
         }
         
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
+            transform: rotate(-45deg) translate(8px, -8px);
         }
         
         .mobile-nav {
             position: fixed;
-            top: 70px;
+            top: 75px;
             left: 0;
             width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
+            background: var(--card-bg);
             padding: 2rem;
             display: none;
             flex-direction: column;
             gap: 1.5rem;
             z-index: 999;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px var(--shadow);
+            max-height: calc(100vh - 75px);
+            overflow-y: auto;
         }
         
         .mobile-nav.active {
             display: flex;
-            transform: translateY(0);
-            opacity: 1;
+            animation: slideDown 0.3s ease-out;
         }
         
         .mobile-nav a {
-            color: rgba(255,255,255,0.8);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: color 0.3s;
+            font-size: 1.05rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: block;
         }
         
         .mobile-nav a:hover {
-            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--accent);
         }
         
+        .mobile-auth-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-auth-btns .btn {
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        /* Enhanced Hero Section */
         .hero {
             min-height: 100vh;
             display: grid;
@@ -188,6 +258,7 @@
             align-items: center;
             gap: 4rem;
             padding: 8rem 6% 4rem;
+            background: var(--dark-bg);
             position: relative;
             overflow: hidden;
         }
@@ -195,13 +266,13 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%);
+            opacity: 0.7;
+            animation: pulseBackground 8s ease-in-out infinite;
         }
         
         .hero-content {
@@ -213,38 +284,54 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(102, 126, 234, 0.1);
+            background: var(--card-bg);
             border: 1px solid rgba(102, 126, 234, 0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
             font-size: 0.85rem;
             margin-bottom: 1.5rem;
-            color: #a8b3ff;
-            animation: fadeIn 1s ease-out 0.2s both;
+            color: var(--accent);
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow);
+            animation: pulse 2s infinite, floatBadge 6s ease-in-out infinite;
         }
         
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             margin-bottom: 1.5rem;
             line-height: 1.1;
             font-weight: 800;
             letter-spacing: -2px;
-            animation: fadeInUp 1s ease-out 0.4s both;
+            color: var(--text-primary);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .gradient-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+            animation: underlinePulse 3s ease-in-out infinite;
         }
         
         .hero p {
-            font-size: 1.25rem;
-            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            color: var(--text-secondary);
             margin-bottom: 2.5rem;
             line-height: 1.8;
-            max-width: 90%;
-            animation: fadeInUp 1s ease-out 0.6s both;
         }
         
         .cta-group {
@@ -252,225 +339,288 @@
             gap: 1.5rem;
             align-items: center;
             margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.8s both;
         }
         
         .btn-primary {
             padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            font-size: 1.1rem;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 1.05rem;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 30px var(--glow);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 15px 40px var(--glow);
         }
         
-        .btn-secondary {
-            padding: 1.2rem 3rem;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            border: 2px solid rgba(255,255,255,0.1);
-            font-size: 1.1rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.2);
+        .btn-primary:hover::before {
+            left: 100%;
         }
         
         .trust-indicators {
             display: flex;
             gap: 2rem;
-            align-items: center;
-            animation: fadeInUp 1s ease-out 1s both;
+            flex-wrap: wrap;
         }
         
         .trust-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
         }
         
+        .trust-item:hover {
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .trust-item i {
+            color: var(--success);
+        }
+        
+        /* Enhanced Phone Showcase with Trading Interface */
         .phone-showcase {
             position: relative;
             z-index: 10;
-            animation: fadeInRight 1s ease-out 0.5s both;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .phone-mockup {
             position: relative;
             width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+            max-width: 380px;
+            filter: drop-shadow(0 30px 60px var(--shadow));
             animation: float 6s ease-in-out infinite;
         }
         
         .phone-frame {
             position: relative;
             width: 100%;
-            aspect-ratio: 9/19;
-            background: linear-gradient(145deg, #1a1f3a, #0f1425);
-            border-radius: 45px;
-            padding: 12px;
-            border: 3px solid rgba(255,255,255,0.1);
+            height: 750px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 15px;
             box-shadow: 
-                0 0 0 8px rgba(102, 126, 234, 0.1),
-                inset 0 0 20px rgba(0,0,0,0.5),
-                0 50px 100px rgba(0,0,0,0.8);
-        }
-        
-        .phone-notch {
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 28px;
-            background: #0a0e27;
-            border-radius: 0 0 20px 20px;
-            z-index: 10;
+                inset 0 0 0 2px rgba(255,255,255,0.1),
+                0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
         }
         
         .phone-screen {
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #0f1628 0%, #1a1f3a 100%);
-            border-radius: 35px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 30px;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         
-        .screen-content {
-            padding: 50px 20px 20px;
-            height: 100%;
+        .trading-header {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 20px 15px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
-        .chart-header {
+        .trading-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
         
-        .crypto-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .crypto-icon {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, #f7931a, #ff6b35);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .crypto-details h3 {
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-        
-        .crypto-details p {
-            font-size: 11px;
-            color: rgba(255,255,255,0.5);
+        .trading-title h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .price-display {
-            text-align: right;
-        }
-        
-        .current-price {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 2px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 10px 0;
+            animation: priceChange 5s infinite alternate;
         }
         
         .price-change {
-            font-size: 12px;
-            color: #10b981;
             display: flex;
-            align-items: center;
-            gap: 3px;
-            justify-content: flex-end;
-        }
-        
-        .chart-canvas {
-            width: 100%;
-            height: 280px;
-            margin: 20px 0;
-        }
-        
-        .time-filters {
-            display: flex;
-            gap: 8px;
             justify-content: center;
-            margin-bottom: 15px;
+            gap: 20px;
+            font-size: 0.9rem;
         }
         
-        .time-btn {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: rgba(255,255,255,0.6);
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .change-up {
+            color: var(--success);
         }
         
-        .time-btn.active {
-            background: rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-            color: #667eea;
+        .change-down {
+            color: var(--danger);
         }
         
-        .action-buttons {
+        .chart-container {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(102, 126, 234, 0.1) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(102, 126, 234, 0.1) 50%, transparent 51%);
+            background-size: 20px 20px;
+        }
+        
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent) 70%, transparent 100%);
+            clip-path: polygon(0% 100%, 5% 80%, 10% 85%, 15% 70%, 20% 75%, 25% 60%, 30% 65%, 35% 50%, 40% 55%, 45% 40%, 50% 45%, 55% 30%, 60% 35%, 65% 20%, 70% 25%, 75% 10%, 80% 15%, 85% 5%, 90% 10%, 95% 0%, 100% 5%);
+            animation: chartMove 8s ease-in-out infinite;
+        }
+        
+        .trading-controls {
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .trade-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            padding: 0 10px;
+            margin-bottom: 15px;
         }
         
-        .action-btn {
-            padding: 14px;
-            border-radius: 12px;
+        .btn-buy, .btn-sell {
+            padding: 12px;
             border: none;
-            font-weight: 600;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 13px;
             transition: all 0.3s;
         }
         
         .btn-buy {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
+            background: var(--success);
+            color: white;
         }
         
         .btn-sell {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: var(--danger);
+            color: white;
         }
         
+        .btn-buy:hover, .btn-sell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .market-data {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .data-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .data-value {
+            font-weight: 700;
+            margin-top: 5px;
+            animation: dataPulse 3s infinite;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: floatAround 15s infinite linear;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 30px;
+            height: 30px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+        
+        /* Enhanced Stats Section */
         .stats-section {
             padding: 5rem 6%;
-            background: linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
         }
         
         .stats-grid {
@@ -479,60 +629,81 @@
             gap: 3rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
         
         .stat-card {
             text-align: center;
             padding: 2rem;
-            background: rgba(255,255,255,0.02);
+            background: var(--card-bg);
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
             transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
         }
         
-        .stat-card.animated {
-            opacity: 1;
-            transform: translateY(0);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
-            background: rgba(102, 126, 234, 0.05);
-            border-color: rgba(102, 126, 234, 0.2);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .stat-card:hover::before {
+            opacity: 0.1;
         }
         
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
         }
         
         .stat-label {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             font-size: 1rem;
             font-weight: 500;
         }
         
+        /* Enhanced Features Section */
         .features-section {
             padding: 6rem 6%;
+            background: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
         }
         
         .section-header {
             text-align: center;
             max-width: 700px;
             margin: 0 auto 4rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .section-header.animated {
-            opacity: 1;
-            transform: translateY(0);
+            position: relative;
+            z-index: 10;
         }
         
         .section-header h2 {
@@ -540,11 +711,12 @@
             font-weight: 800;
             margin-bottom: 1rem;
             letter-spacing: -1px;
+            color: var(--text-primary);
         }
         
         .section-header p {
             font-size: 1.2rem;
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             line-height: 1.7;
         }
         
@@ -554,23 +726,19 @@
             gap: 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
         
         .feature-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s;
+            box-shadow: 0 4px 20px var(--shadow);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .feature-card.animated {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .feature-card::before {
@@ -580,186 +748,68 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), transparent);
+            background: var(--primary-gradient);
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
         
         .feature-card:hover {
             transform: translateY(-10px);
             border-color: rgba(102, 126, 234, 0.3);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 20px 60px var(--shadow);
         }
         
         .feature-card:hover::before {
-            opacity: 1;
+            opacity: 0.05;
         }
         
         .feature-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: var(--primary-gradient);
+            transform: scale(1.1) rotate(5deg);
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
-            position: relative;
-            z-index: 1;
+            color: var(--text-primary);
         }
         
         .feature-card p {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             line-height: 1.7;
             font-size: 1rem;
-            position: relative;
-            z-index: 1;
         }
         
-        .crypto-showcase {
-            padding: 6rem 6%;
-            background: linear-gradient(180deg, rgba(10, 14, 39, 0.8) 0%, rgba(10, 14, 39, 1) 100%);
-        }
-        
-        .crypto-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .crypto-card {
-            background: rgba(255,255,255,0.02);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .crypto-card.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .crypto-card:hover {
-            transform: translateY(-5px);
-            background: rgba(102, 126, 234, 0.05);
-            border-color: rgba(102, 126, 234, 0.2);
-        }
-        
-        .crypto-logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .crypto-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .crypto-card p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-        }
-        
-        .security-section {
-            padding: 6rem 6%;
-            background: linear-gradient(180deg, rgba(10, 14, 39, 0.8) 0%, rgba(10, 14, 39, 1) 100%);
-        }
-        
-        .security-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .security-image {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-        
-        .security-image.animated {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .security-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        .security-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .security-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        
-        .security-feature.animated {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .security-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-        
-        .security-text h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .security-text p {
-            color: rgba(255,255,255,0.6);
-            line-height: 1.6;
-        }
-        
+        /* Enhanced Testimonials */
         .testimonials {
             padding: 6rem 6%;
-            background: linear-gradient(180deg, rgba(10, 14, 39, 1) 0%, rgba(10, 14, 39, 0.8) 100%);
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials .section-header h2,
+        .testimonials .section-header p {
+            color: white;
+        }
+        
+        .testimonials .section-header p {
+            color: rgba(255,255,255,0.7);
         }
         
         .testimonial-grid {
@@ -768,33 +818,46 @@
             gap: 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
         
         .testimonial-card {
-            background: rgba(255,255,255,0.02);
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 2.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
         }
         
-        .testimonial-card.animated {
-            opacity: 1;
-            transform: translateY(0);
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
         
         .testimonial-card:hover {
             transform: translateY(-5px);
-            background: rgba(102, 126, 234, 0.05);
-            border-color: rgba(102, 126, 234, 0.2);
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+        
+        .testimonial-card:hover::before {
+            opacity: 0.05;
         }
         
         .testimonial-content {
             font-style: italic;
             margin-bottom: 1.5rem;
-            color: rgba(255,255,255,0.8);
+            color: var(--text-secondary);
             line-height: 1.7;
         }
         
@@ -808,152 +871,405 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            color: white;
+            transition: transform 0.3s;
+        }
+        
+        .testimonial-card:hover .author-avatar {
+            transform: scale(1.1);
         }
         
         .author-info h4 {
             font-size: 1.1rem;
             margin-bottom: 0.2rem;
+            color: var(--text-primary);
         }
         
         .author-info p {
-            color: rgba(255,255,255,0.5);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
+        /* Investment Popup Styles */
+        .investment-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-left: 4px solid var(--success);
+            z-index: 1001;
+            max-width: 300px;
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .investment-popup.show {
+            transform: translateX(0);
+        }
+        
+        .popup-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .popup-content {
+            flex: 1;
+        }
+        
+        .popup-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+        
+        .popup-content p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .popup-amount {
+            font-weight: 700;
+            color: var(--success);
+        }
+        
+        .popup-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        
+        .popup-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .popup-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+        
+        /* Live Trading Data Ticker */
+        .trading-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--darker-bg);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 0;
+            overflow: hidden;
+            z-index: 999;
+        }
+        
+        .ticker-content {
+            display: flex;
+            animation: tickerScroll 30s linear infinite;
+            white-space: nowrap;
+        }
+        
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 40px;
+            padding: 5px 15px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .ticker-symbol {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .ticker-price {
+            font-weight: 600;
+        }
+        
+        .ticker-change {
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .ticker-change.positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        
+        .ticker-change.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        
         footer {
-            background: rgba(10, 14, 39, 0.5);
+            background: var(--darker-bg);
             padding: 3rem 6%;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            margin-bottom: 60px; /* Space for ticker */
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
+        /* Enhanced Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(-2deg); }
-            50% { transform: translateY(-25px) rotate(2deg); }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.15; }
-            50% { transform: scale(1.1); opacity: 0.25; }
+            0% { box-shadow: 0 4px 15px var(--shadow); }
+            50% { box-shadow: 0 4px 25px var(--glow); }
+            100% { box-shadow: 0 4px 15px var(--shadow); }
+        }
+        
+        @keyframes pulseBackground {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--glow); }
+            50% { box-shadow: 0 0 20px var(--glow); }
+            100% { box-shadow: 0 0 5px var(--glow); }
+        }
+        
+        @keyframes underlinePulse {
+            0%, 100% { transform: scaleX(0.8); }
+            50% { transform: scaleX(1); }
+        }
+        
+        @keyframes priceChange {
+            0% { color: var(--success); transform: scale(1); }
+            100% { color: var(--accent); transform: scale(1.02); }
+        }
+        
+        @keyframes chartMove {
+            0%, 100% { clip-path: polygon(0% 100%, 5% 80%, 10% 85%, 15% 70%, 20% 75%, 25% 60%, 30% 65%, 35% 50%, 40% 55%, 45% 40%, 50% 45%, 55% 30%, 60% 35%, 65% 20%, 70% 25%, 75% 10%, 80% 15%, 85% 5%, 90% 10%, 95% 0%, 100% 5%); }
+            50% { clip-path: polygon(0% 100%, 5% 85%, 10% 80%, 15% 75%, 20% 70%, 25% 65%, 30% 60%, 35% 55%, 40% 50%, 45% 45%, 50% 40%, 55% 35%, 60% 30%, 65% 25%, 70% 20%, 75% 15%, 80% 10%, 85% 5%, 90% 0%, 95% 5%, 100% 10%); }
+        }
+        
+        @keyframes dataPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 20px) rotate(90deg); }
+            50% { transform: translate(0, 40px) rotate(180deg); }
+            75% { transform: translate(-20px, 20px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        /* Staggered animations for cards */
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+        .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
+        .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Scroll animations */
+        .feature-card, .testimonial-card, .stat-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .feature-card.visible, .testimonial-card.visible, .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; text-align: center; }
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center;
+                padding-top: 7rem;
+            }
             .hero h1 { font-size: 3rem; }
-            .features-grid, .testimonial-grid, .crypto-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid, .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .security-content { grid-template-columns: 1fr; }
+            .cta-group { justify-content: center; }
+            .trust-indicators { justify-content: center; }
+            .phone-mockup { max-width: 320px; }
+            .investment-popup {
+                right: 10px;
+                bottom: 10px;
+                max-width: 280px;
+            }
         }
         
         @media (max-width: 768px) {
             nav, .auth-btns { display: none; }
             .hamburger { display: flex; }
             .hero h1 { font-size: 2.5rem; }
-            .features-grid, .testimonial-grid, .crypto-grid, .stats-grid { grid-template-columns: 1fr; }
-            .phone-mockup { max-width: 320px; }
-            .cta-group { flex-direction: column; }
-            .trust-indicators { flex-direction: column; gap: 1rem; }
+            .features-grid, .testimonial-grid, .stats-grid { grid-template-columns: 1fr; }
+            .cta-group { flex-direction: column; width: 100%; }
+            .btn-primary { width: 100%; }
+            .section-header h2 { font-size: 2.2rem; }
+            .logo img { width: 2.5em; }
+            .investment-popup {
+                max-width: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header { padding: 1rem 4%; }
+            .hero, .features-section, .testimonials, .stats-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+            .hero h1 { font-size: 2rem; }
+            .stat-number { font-size: 2.5rem; }
+            .logo img { width: 2em; }
+            .investment-popup {
+                max-width: 220px;
+                padding: 10px 15px;
+            }
         }
     </style>
 </head>
 <body>
-
-
-
-
-
     <header>
-        <div class="logo"> <img src = "autobot-logo.png" alt ="" style = width:2em />
-
-</div>
-        <nav>
-             <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="policy.html">Legal</a>
-        </nav>
-        <div class="auth-btns">
-            <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
-            <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
-        </div>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+               <img src="autobot-logo.png" alt="Autobotexpert Logo">
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="policy.html">Legal</a>
+            </nav>
+            <div class="auth-btns">
+                <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
+                <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
-
-
-
     <div class="mobile-nav">
-                <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="policy.html">Legal</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="policy.html">Legal</a>
         <div class="mobile-auth-btns">
             <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
             <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
         </div>
     </div>
 
+    <!-- Investment Popup -->
+    <div class="investment-popup" id="investmentPopup">
+        <div class="popup-avatar" id="popupAvatar">JD</div>
+        <div class="popup-content">
+            <h4 id="popupName">John Doe</h4>
+            <p>Just invested <span class="popup-amount" id="popupAmount">$20,000</span> in BTC</p>
+            <div class="popup-time" id="popupTime">2 minutes ago</div>
+        </div>
+        <button class="popup-close" id="popupClose">&times;</button>
+    </div>
 
-
-
-
+    <!-- Live Trading Ticker -->
+    <div class="trading-ticker">
+        <div class="ticker-content" id="tickerContent">
+            <!-- Ticker items will be generated by JavaScript -->
+        </div>
+    </div>
 
     <section class="hero">
         <div class="hero-content">
             <div class="badge">
-                <span>🚀</span>
-                <span>Trusted by 150K+ traders worldwide</span>
+                <i class="fas fa-shield-alt"></i>
+                <span>Trusted by 150K+ investors worldwide</span>
             </div>
-            <h1>The Future of <span class="gradient-text">Crypto Trading</span></h1>
-            <p>Trade Bitcoin, Ethereum, and 200+ cryptocurrencies with advanced tools, real-time data, and institutional-grade security. Access professional trading features designed for both beginners and experts.</p>
+            <h1> <span class="gradient-text">Smart Investing Made Simple</span></h1>
+            <p>Professional cryptocurrency trading platform with advanced AI tools, real-time analytics, and institutional-grade security. Start building your wealth today.</p>
             
             <div class="cta-group">
-<a href="https://autobots.pythonanywhere.com/signup" class="btn btn-primary">Start Trading Now</a>
-
-                <!-- <button class="btn btn-primary">Start Trading Now</button> -->
-                <!-- <button class="btn btn-secondary">
-                    <span>▶</span>
-                    <span>Watch Demo</span>
-                </button> -->
+                <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-primary">Start Investing Now</a>
             </div>
             
             <div class="trust-indicators">
                 <div class="trust-item">
-                    <span>✓</span>
+                    <i class="fas fa-check-circle"></i>
+                    <span>SEC Regulated</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-check-circle"></i>
                     <span>Bank-Level Security</span>
                 </div>
                 <div class="trust-item">
-                    <span>✓</span>
+                    <i class="fas fa-check-circle"></i>
                     <span>24/7 Support</span>
-                </div>
-                <div class="trust-item">
-                    <span>✓</span>
-                    <span>Low Fees</span>
                 </div>
             </div>
         </div>
@@ -961,40 +1277,46 @@
         <div class="phone-showcase">
             <div class="phone-mockup">
                 <div class="phone-frame">
-                    <div class="phone-notch"></div>
                     <div class="phone-screen">
-                        <div class="screen-content">
-                            <div class="chart-header">
-                                <div class="crypto-info">
-                                    <div class="crypto-icon">₿</div>
-                                    <div class="crypto-details">
-                                        <h3>Bitcoin</h3>
-                                        <p>BTC/USD</p>
-                                    </div>
+                        <div class="trading-header">
+                            <div class="trading-title">
+                                <h3>BTC/USDT</h3>
+                                <span class="change-up" id="phoneChange">+2.4%</span>
+                            </div>
+                            <div class="price-display" id="phonePrice">$57,423.86</div>
+                            <div class="price-change">
+                                <span>24h High: $58,210</span>
+                                <span>24h Low: $56,980</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart"></div>
+                            <div class="chart-line"></div>
+                        </div>
+                        <div class="trading-controls">
+                            <div class="trade-buttons">
+                                <button class="btn-buy">BUY</button>
+                                <button class="btn-sell">SELL</button>
+                            </div>
+                            <div class="market-data">
+                                <div class="data-item">
+                                    <span>Volume</span>
+                                    <span class="data-value" id="phoneVolume">2.4B</span>
                                 </div>
-                                <div class="price-display">
-                                    <div class="current-price">$64,234</div>
-                                    <div class="price-change">
-                                        <span>↗</span>
-                                        <span>+5.24%</span>
-                                    </div>
+                                <div class="data-item">
+                                    <span>Change</span>
+                                    <span class="data-value change-up" id="phoneChangePercent">+2.4%</span>
+                                </div>
+                                <div class="data-item">
+                                    <span>Liquidity</span>
+                                    <span class="data-value">High</span>
                                 </div>
                             </div>
-                            
-                            <canvas id="tradingChart" class="chart-canvas"></canvas>
-                            
-                            <div class="time-filters">
-                                <button class="time-btn">1H</button>
-                                <button class="time-btn">1D</button>
-                                <button class="time-btn active">1W</button>
-                                <button class="time-btn">1M</button>
-                                <button class="time-btn">1Y</button>
-                            </div>
-                            
-                            <div class="action-buttons">
-                                <button class="action-btn btn-buy">Buy BTC</button>
-                                <button class="action-btn btn-sell">Sell BTC</button>
-                            </div>
+                        </div>
+                        <div class="floating-elements">
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
                         </div>
                     </div>
                 </div>
@@ -1005,20 +1327,32 @@
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">$2.5B+</div>
-                <div class="stat-label">Daily Volume</div>
+                <div class="stat-number">
+                    <i class="fas fa-chart-line stat-icon"></i>
+                    $2.5B+
+                </div>
+                <div class="stat-label">Daily Trading Volume</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">150K+</div>
-                <div class="stat-label">Active Traders</div>
+                <div class="stat-number">
+                    <i class="fas fa-users stat-icon"></i>
+                    150K+
+                </div>
+                <div class="stat-label">Active Investors</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">200+</div>
+                <div class="stat-number">
+                    <i class="fas fa-coins stat-icon"></i>
+                    200+
+                </div>
                 <div class="stat-label">Cryptocurrencies</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime</div>
+                <div class="stat-number">
+                    <i class="fas fa-bolt stat-icon"></i>
+                    99.9%
+                </div>
+                <div class="stat-label">Platform Uptime</div>
             </div>
         </div>
     </section>
@@ -1026,32 +1360,32 @@
     <section class="features-section">
         <div class="section-header">
             <h2>Why Choose <span class="gradient-text">Autobotexpert</span></h2>
-            <p>Professional-grade trading platform built for both beginners and experienced traders</p>
+            <p>Professional-grade platform designed for both beginners and experienced investors</p>
         </div>
         
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🔐</div>
                 <h3>Military-Grade Security</h3>
-                <p>Your assets protected with multi-signature wallets, cold storage, and advanced encryption protocols.</p>
+                <p>Your assets protected with multi-signature wallets, cold storage, and advanced encryption protocols trusted by institutions.</p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast Execution</h3>
-                <p>Execute trades in milliseconds with our high-performance matching engine and low-latency infrastructure.</p>
+                <h3>Lightning Fast Trading</h3>
+                <p>Execute trades in milliseconds with our high-performance infrastructure and advanced order routing technology.</p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">📊</div>
-                <h3>Advanced Trading Tools</h3>
-                <p>Professional charting with 100+ indicators, real-time market data, and algorithmic trading support.</p>
+                <h3>Advanced Analytics</h3>
+                <p>Professional charting tools with 100+ indicators, real-time market data, and AI-powered trading insights.</p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">💎</div>
-                <h3>Premium Liquidity</h3>
-                <p>Access deep liquidity pools with competitive spreads and minimal slippage on all major pairs.</p>
+                <h3>Deep Liquidity</h3>
+                <p>Access institutional liquidity pools with competitive spreads and minimal slippage on all major pairs.</p>
             </div>
             
             <div class="feature-card">
@@ -1068,99 +1402,16 @@
         </div>
     </section>
 
-    <section class="crypto-showcase">
-        <div class="section-header">
-            <h2>Popular <span class="gradient-text">Cryptocurrencies</span></h2>
-            <p>Trade the most popular digital assets with competitive fees and deep liquidity</p>
-        </div>
-        
-        <div class="crypto-grid">
-            <div class="crypto-card">
-                <div class="crypto-logo" style="background: linear-gradient(135deg, #f7931a, #ff6b35);">₿</div>
-                <h3>Bitcoin</h3>
-                <p>BTC/USD</p>
-            </div>
-            
-            <div class="crypto-card">
-                <div class="crypto-logo" style="background: linear-gradient(135deg, #627eea, #8a63d2);">Ξ</div>
-                <h3>Ethereum</h3>
-                <p>ETH/USD</p>
-            </div>
-            
-            <div class="crypto-card">
-                <div class="crypto-logo" style="background: linear-gradient(135deg, #00d395, #00a86b);">●</div>
-                <h3>Cardano</h3>
-                <p>ADA/USD</p>
-            </div>
-            
-            <div class="crypto-card">
-                <div class="crypto-logo" style="background: linear-gradient(135deg, #00c4ff, #0066ff);">●</div>
-                <h3>Polkadot</h3>
-                <p>DOT/USD</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="security-section">
-        <div class="section-header">
-            <h2>Advanced <span class="gradient-text">Security</span></h2>
-            <p>Your assets are protected with industry-leading security measures</p>
-        </div>
-        
-        <div class="security-content">
-            <div class="security-image">
-                <div style="width:100%;height:400px;background:linear-gradient(135deg, #1a1f3a, #0f1425);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:1.2rem;border-radius:20px;">
-                    <i class="fas fa-shield-alt" style="font-size:4rem;margin-right:1rem;"></i>
-                    Security Visualization
-                </div>
-            </div>
-            
-            <div class="security-features">
-                <div class="security-feature">
-                    <div class="security-icon">🔒</div>
-                    <div class="security-text">
-                        <h3>Cold Storage</h3>
-                        <p>98% of user funds are stored in offline, geographically distributed cold wallets.</p>
-                    </div>
-                </div>
-                
-                <div class="security-feature">
-                    <div class="security-icon">🛡️</div>
-                    <div class="security-text">
-                        <h3>Multi-Signature Protection</h3>
-                        <p>All withdrawals require multiple signatures from geographically separated team members.</p>
-                    </div>
-                </div>
-                
-                <div class="security-feature">
-                    <div class="security-icon">🔍</div>
-                    <div class="security-text">
-                        <h3>Real-Time Monitoring</h3>
-                        <p>24/7 security monitoring and anomaly detection to prevent unauthorized access.</p>
-                    </div>
-                </div>
-                
-                <div class="security-feature">
-                    <div class="security-icon">✅</div>
-                    <div class="security-text">
-                        <h3>Insurance Protection</h3>
-                        <p>Digital assets are insured against theft and security breaches.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="testimonials">
         <div class="section-header">
-            <h2>What Our <span class="gradient-text">Traders Say</span></h2>
-            <p>Join thousands of satisfied traders who trust Autobotexpert with their investments</p>
+            <h2>What Our <span class="gradient-text">Investors Say</span></h2>
+            <p>Join thousands of satisfied traders who trust Autobotexpert</p>
         </div>
         
         <div class="testimonial-grid">
             <div class="testimonial-card">
                 <div class="testimonial-content">
-                    "Autobotexpert has completely transformed my trading experience. The platform is intuitive yet powerful enough for my advanced strategies."
+                    "Autobotexpert transformed my investment journey. The platform is intuitive yet powerful enough for advanced strategies. Best decision I've made!"
                 </div>
                 <div class="testimonial-author">
                     <div class="author-avatar">MJ</div>
@@ -1173,20 +1424,20 @@
             
             <div class="testimonial-card">
                 <div class="testimonial-content">
-                    "As a beginner, I was intimidated by crypto trading, but Autobotexpert made it accessible. The educational resources are fantastic!"
+                    "As a beginner, crypto seemed overwhelming. Autobotexpert made it accessible with excellent educational resources and user-friendly interface."
                 </div>
                 <div class="testimonial-author">
                     <div class="author-avatar">SR</div>
                     <div class="author-info">
                         <h4>Sarah Rodriguez</h4>
-                        <p>Beginner Investor</p>
+                        <p>First-Time Investor</p>
                     </div>
                 </div>
             </div>
             
             <div class="testimonial-card">
                 <div class="testimonial-content">
-                    "The execution speed and low fees keep me coming back. I've tried other platforms, but none compare to Autobotexpert's performance."
+                    "Exceptional execution speed and competitive fees. I've tested many platforms, but Autobotexpert's performance is unmatched in the industry."
                 </div>
                 <div class="testimonial-author">
                     <div class="author-avatar">DK</div>
@@ -1200,11 +1451,10 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Autobotexpert. All rights reserved. | Trading cryptocurrencies involves risk.</p>
+        <p>&copy; 2025 Autobotexpert. All rights reserved. | Professional Investment Platform</p>
     </footer>
 
     <script>
-        // Mobile Navigation Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileNav = document.querySelector('.mobile-nav');
         
@@ -1213,7 +1463,6 @@
             mobileNav.classList.toggle('active');
         });
         
-        // Close mobile nav when clicking outside
         document.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
                 hamburger.classList.remove('active');
@@ -1221,136 +1470,186 @@
             }
         });
         
-        // Animate elements on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.stat-card, .section-header, .feature-card, .crypto-card, .security-image, .security-feature, .testimonial-card');
-            
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('animated');
-                }
-            });
-        };
-        
-        // Initial check for elements in view
-        animateOnScroll();
-        
-        // Check on scroll
-        window.addEventListener('scroll', animateOnScroll);
-        
-        // Trading chart animation
-        const canvas = document.getElementById('tradingChart');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 370;
-        canvas.height = 280;
-        
-        let dataPoints = [];
-        let animationOffset = 0;
-        
-        function generateRealisticData() {
-            dataPoints = [];
-            let basePrice = 64000;
-            let volatility = 800;
-            
-            for (let i = 0; i < 100; i++) {
-                const trend = Math.sin(i * 0.05) * 500;
-                const noise = (Math.random() - 0.5) * volatility;
-                basePrice += trend * 0.1 + noise;
-                dataPoints.push(basePrice);
-            }
-        }
-        
-        generateRealisticData();
-        
-        function drawChart() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const padding = 20;
-            const width = canvas.width - padding * 2;
-            const height = canvas.height - padding * 2;
-            
-            const maxPrice = Math.max(...dataPoints);
-            const minPrice = Math.min(...dataPoints);
-            const priceRange = maxPrice - minPrice;
-            
-            // Draw grid
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-            ctx.lineWidth = 1;
-            for (let i = 0; i < 5; i++) {
-                const y = padding + (height / 4) * i;
-                ctx.beginPath();
-                ctx.moveTo(padding, y);
-                ctx.lineTo(canvas.width - padding, y);
-                ctx.stroke();
-            }
-            
-            // Draw line chart
-            ctx.strokeStyle = '#667eea';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            
-            dataPoints.forEach((price, i) => {
-                const x = padding + (width / dataPoints.length) * i;
-                const y = padding + height - ((price - minPrice) / priceRange) * height;
-                
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            });
-            
-            ctx.stroke();
-            
-            // Draw gradient fill
-            const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
-            gradient.addColorStop(0, 'rgba(102, 126, 234, 0.3)');
-            gradient.addColorStop(1, 'rgba(102, 126, 234, 0)');
-            
-            ctx.lineTo(canvas.width - padding, canvas.height - padding);
-            ctx.lineTo(padding, canvas.height - padding);
-            ctx.closePath();
-            ctx.fillStyle = gradient;
-            ctx.fill();
-            
-            // Animate
-            animationOffset += 0.3;
-            if (animationOffset > 50) {
-                dataPoints.shift();
-                const lastPrice = dataPoints[dataPoints.length - 1];
-                const newPrice = lastPrice + (Math.random() - 0.5) * 500;
-                dataPoints.push(newPrice);
-                animationOffset = 0;
-            }
-            
-            requestAnimationFrame(drawChart);
-        }
-        
-        drawChart();
-        
-        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.style.background = 'rgba(10, 14, 39, 0.98)';
-                header.style.padding = '0.8rem 6%';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
             } else {
-                header.style.background = 'rgba(10, 14, 39, 0.95)';
-                header.style.padding = '1.2rem 6%';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
             }
         });
         
-        // Time filter buttons
-        const timeButtons = document.querySelectorAll('.time-btn');
-        timeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                timeButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards for animation
+        document.querySelectorAll('.feature-card, .testimonial-card, .stat-card').forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Dynamic price updates for the trading interface
+        function updateTradingData() {
+            const priceElement = document.querySelector('.price-display');
+            const changeElement = document.querySelector('.change-up');
+            const volumeElement = document.querySelector('.data-value');
+            
+            // Simulate price fluctuations
+            const basePrice = 57423.86;
+            const randomChange = (Math.random() - 0.5) * 1000;
+            const newPrice = basePrice + randomChange;
+            const percentChange = (randomChange / basePrice * 100).toFixed(2);
+            
+            priceElement.textContent = `$${newPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            if (randomChange >= 0) {
+                changeElement.textContent = `+${percentChange}%`;
+                changeElement.className = 'change-up';
+            } else {
+                changeElement.textContent = `${percentChange}%`;
+                changeElement.className = 'change-down';
+            }
+            
+            // Update volume with random value
+            const volume = (2.4 + Math.random() * 0.5).toFixed(1);
+            volumeElement.textContent = `${volume}B`;
+        }
+        
+        // Update trading data every 3 seconds
+        setInterval(updateTradingData, 3000);
+        
+        // Add click effects to trading buttons
+        document.querySelectorAll('.btn-buy, .btn-sell').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
             });
         });
+
+        // Investment Popup System
+        const investmentPopup = document.getElementById('investmentPopup');
+        const popupClose = document.getElementById('popupClose');
+        const popupAvatar = document.getElementById('popupAvatar');
+        const popupName = document.getElementById('popupName');
+        const popupAmount = document.getElementById('popupAmount');
+        const popupTime = document.getElementById('popupTime');
+
+        // Sample data for investment popups
+        const investors = [
+            { name: 'John Doe', avatar: 'JD', amount: '$20,000', time: '2 minutes ago' },
+            { name: 'Sarah Wilson', avatar: 'SW', amount: '$15,500', time: '5 minutes ago' },
+            { name: 'Mike Chen', avatar: 'MC', amount: '$32,000', time: '8 minutes ago' },
+            { name: 'Emma Rodriguez', avatar: 'ER', amount: '$12,750', time: '12 minutes ago' },
+            { name: 'Alex Thompson', avatar: 'AT', amount: '$25,300', time: '15 minutes ago' },
+            { name: 'Lisa Zhang', avatar: 'LZ', amount: '$18,900', time: '20 minutes ago' }
+        ];
+
+        // Show investment popup
+        function showInvestmentPopup() {
+            const investor = investors[Math.floor(Math.random() * investors.length)];
+            
+            popupAvatar.textContent = investor.avatar;
+            popupName.textContent = investor.name;
+            popupAmount.textContent = investor.amount;
+            popupTime.textContent = investor.time;
+            
+            investmentPopup.classList.add('show');
+            
+            // Auto hide after 8 seconds
+            setTimeout(() => {
+                investmentPopup.classList.remove('show');
+            }, 8000);
+        }
+
+        // Close popup manually
+        popupClose.addEventListener('click', () => {
+            investmentPopup.classList.remove('show');
+        });
+
+        // Show first popup after 5 seconds, then every 15-25 seconds
+        setTimeout(showInvestmentPopup, 5000);
+        setInterval(showInvestmentPopup, 15000 + Math.random() * 10000);
+
+        // Live Trading Ticker
+        const tickerContent = document.getElementById('tickerContent');
+        
+        // Cryptocurrency data for ticker
+        const cryptocurrencies = [
+            { symbol: 'BTC', name: 'Bitcoin', price: 57423.86, change: 2.4 },
+            { symbol: 'ETH', name: 'Ethereum', price: 3256.42, change: 1.2 },
+            { symbol: 'ADA', name: 'Cardano', price: 1.25, change: -0.8 },
+            { symbol: 'DOT', name: 'Polkadot', price: 42.18, change: 3.1 },
+            { symbol: 'SOL', name: 'Solana', price: 132.75, change: 5.2 },
+            { symbol: 'XRP', name: 'Ripple', price: 0.85, change: -1.5 },
+            { symbol: 'DOGE', name: 'Dogecoin', price: 0.22, change: 0.7 },
+            { symbol: 'LTC', name: 'Litecoin', price: 128.34, change: -0.3 }
+        ];
+
+        // Generate ticker items
+        function generateTickerItems() {
+            tickerContent.innerHTML = '';
+            
+            // Create multiple copies for seamless scrolling
+            for (let i = 0; i < 3; i++) {
+                cryptocurrencies.forEach(crypto => {
+                    const tickerItem = document.createElement('div');
+                    tickerItem.className = 'ticker-item';
+                    
+                    const changeClass = crypto.change >= 0 ? 'positive' : 'negative';
+                    const changeSymbol = crypto.change >= 0 ? '+' : '';
+                    
+                    tickerItem.innerHTML = `
+                        <div class="ticker-symbol">${crypto.symbol}</div>
+                        <div class="ticker-price">$${crypto.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                        <div class="ticker-change ${changeClass}">${changeSymbol}${crypto.change}%</div>
+                    `;
+                    
+                    tickerContent.appendChild(tickerItem);
+                });
+            }
+        }
+
+        // Update ticker prices randomly
+        function updateTickerPrices() {
+            const tickerItems = document.querySelectorAll('.ticker-item');
+            
+            tickerItems.forEach(item => {
+                const symbol = item.querySelector('.ticker-symbol').textContent;
+                const crypto = cryptocurrencies.find(c => c.symbol === symbol);
+                
+                if (crypto) {
+                    // Simulate small price changes
+                    const randomChange = (Math.random() - 0.5) * 0.5;
+                    crypto.change += randomChange;
+                    crypto.price += (crypto.price * randomChange) / 100;
+                    
+                    const changeClass = crypto.change >= 0 ? 'positive' : 'negative';
+                    const changeSymbol = crypto.change >= 0 ? '+' : '';
+                    
+                    item.querySelector('.ticker-price').textContent = `$${crypto.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    item.querySelector('.ticker-change').className = `ticker-change ${changeClass}`;
+                    item.querySelector('.ticker-change').textContent = `${changeSymbol}${crypto.change.toFixed(2)}%`;
+                }
+            });
+        }
+
+        // Initialize ticker
+        generateTickerItems();
+        
+        // Update ticker prices every 5 seconds
+        setInterval(updateTickerPrices, 5000);
     </script>
 </body>
 </html>

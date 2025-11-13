@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Autobotexpert Pro</title>
+    <title>About Us - Autobotexpert</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -12,10 +12,25 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            --dark-bg: #0a0e27;
+            --darker-bg: #05071e;
+            --card-bg: #1a1f3d;
+            --card-hover: #22284a;
+            --text-primary: #f0f2ff;
+            --text-secondary: #a0a6c9;
+            --accent: #667eea;
+            --accent-hover: #5568d3;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --glow: rgba(102, 126, 234, 0.3);
+        }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0e27;
-            color: #fff;
+            background: var(--dark-bg);
+            color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -27,21 +42,58 @@
             background: rgba(10, 14, 39, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
-            padding: 1.2rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 6%;
+            box-shadow: 0 2px 20px var(--shadow);
             transition: all 0.3s ease;
         }
         
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
         .logo {
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .logo img {
+            width: 3em;
+            height: auto;
+            filter: brightness(0) invert(1);
+            transition: all 0.5s ease;
+        }
+        
+        .logo:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--accent));
+            transform: rotate(5deg);
         }
         
         nav {
@@ -51,26 +103,28 @@
         }
         
         nav a {
-            color: rgba(255,255,255,0.8);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.3s;
             position: relative;
+            padding: 0.5rem 0;
         }
         
         nav a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--accent);
             transition: width 0.3s ease;
         }
         
         nav a:hover {
-            color: #667eea;
+            color: var(--accent);
         }
         
         nav a:hover::after {
@@ -80,60 +134,68 @@
         .auth-btns {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
         
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 0.75rem 1.8rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .btn-login {
             background: transparent;
-            color: #fff;
-            border: 2px solid rgba(102, 126, 234, 0.5);
+            color: var(--accent);
+            border: 2px solid var(--accent);
         }
         
         .btn-login:hover {
             background: rgba(102, 126, 234, 0.1);
-            border-color: #667eea;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--glow);
         }
         
         .btn-signup {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px var(--glow);
         }
         
         .btn-signup:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 25px var(--glow);
         }
         
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 4px;
+            gap: 5px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .hamburger:hover {
+            background: rgba(102, 126, 234, 0.1);
         }
         
         .hamburger span {
-            width: 25px;
+            width: 28px;
             height: 3px;
-            background: #fff;
-            border-radius: 2px;
+            background: var(--accent);
+            border-radius: 3px;
             transition: all 0.3s ease;
         }
         
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(8px, 8px);
         }
         
         .hamburger.active span:nth-child(2) {
@@ -141,56 +203,65 @@
         }
         
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
+            transform: rotate(-45deg) translate(8px, -8px);
         }
         
         .mobile-nav {
             position: fixed;
-            top: 70px;
+            top: 75px;
             left: 0;
             width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
+            background: var(--card-bg);
             padding: 2rem;
             display: none;
             flex-direction: column;
             gap: 1.5rem;
             z-index: 999;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px var(--shadow);
+            max-height: calc(100vh - 75px);
+            overflow-y: auto;
         }
         
         .mobile-nav.active {
             display: flex;
-            transform: translateY(0);
-            opacity: 1;
+            animation: slideDown 0.3s ease-out;
         }
         
         .mobile-nav a {
-            color: rgba(255,255,255,0.8);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: color 0.3s;
+            font-size: 1.05rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: block;
         }
         
         .mobile-nav a:hover {
-            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--accent);
         }
         
         .mobile-auth-btns {
             display: flex;
+            flex-direction: column;
             gap: 1rem;
             margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-auth-btns .btn {
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
         }
         
         .hero-section {
             padding: 10rem 6% 5rem;
             text-align: center;
+            background: var(--dark-bg);
             position: relative;
             overflow: hidden;
         }
@@ -198,14 +269,12 @@
         .hero-section::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1000px;
-            height: 1000px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
         }
         
         .hero-section h1 {
@@ -213,26 +282,22 @@
             margin-bottom: 1.5rem;
             font-weight: 800;
             letter-spacing: -2px;
-            position: relative;
-            z-index: 1;
             animation: fadeInUp 1s ease-out;
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .hero-section p {
             font-size: 1.3rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-secondary);
             max-width: 900px;
             margin: 0 auto;
             line-height: 1.8;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease-out 0.3s both;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
         
         .story-section {
@@ -250,27 +315,13 @@
             margin-bottom: 2rem;
             font-weight: 800;
             letter-spacing: -1px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .story-content h2.animated {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .story-content p {
             font-size: 1.15rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-secondary);
             line-height: 1.9;
             margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .story-content p.animated {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .story-image {
@@ -278,46 +329,84 @@
             height: 500px;
             border-radius: 30px;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            opacity: 0;
-            transform: translateX(30px);
+            box-shadow: 0 20px 60px var(--shadow);
+            transition: all 0.5s ease;
         }
         
-        .story-image.animated {
-            opacity: 1;
-            transform: translateX(0);
+        .story-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px var(--shadow);
         }
         
-        .story-image-content {
-            text-align: center;
-            padding: 3rem;
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
         
-        .story-image-content .icon {
-            font-size: 6rem;
-            margin-bottom: 2rem;
+        .story-image:hover img {
+            transform: scale(1.05);
         }
         
-        .ai-section {
+        .mission-section {
             padding: 6rem 6%;
-            background: linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 100% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+        
+        .mission-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px var(--shadow);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.4s ease;
+        }
+        
+        .mission-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 80px var(--shadow);
+        }
+        
+        .mission-content h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+        
+        .mission-content p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .values-section {
+            padding: 6rem 6%;
+            background: var(--dark-bg);
         }
         
         .section-header {
             text-align: center;
             max-width: 800px;
             margin: 0 auto 5rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .section-header.animated {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .section-header h2 {
@@ -329,144 +418,8 @@
         
         .section-header p {
             font-size: 1.2rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-secondary);
             line-height: 1.8;
-        }
-        
-        .ai-features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .ai-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-            padding: 3rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .ai-card.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .ai-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        
-        .ai-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(102, 126, 234, 0.3);
-            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.2);
-        }
-        
-        .ai-card:hover::before {
-            opacity: 1;
-        }
-        
-        .ai-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .ai-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .ai-card p {
-            color: rgba(255,255,255,0.7);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .ai-card ul {
-            list-style: none;
-            margin-top: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .ai-card ul li {
-            color: rgba(255,255,255,0.6);
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        
-        .ai-card ul li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #667eea;
-        }
-        
-        .mission-section {
-            padding: 6rem 6%;
-            text-align: center;
-        }
-        
-        .mission-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 4rem;
-            background: linear-gradient(145deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .mission-content.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .mission-content h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            font-weight: 800;
-        }
-        
-        .mission-content p {
-            font-size: 1.25rem;
-            color: rgba(255,255,255,0.8);
-            line-height: 2;
-            margin-bottom: 1.5rem;
-        }
-        
-        .values-section {
-            padding: 6rem 6%;
         }
         
         .values-grid {
@@ -474,34 +427,52 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
             max-width: 1400px;
-            margin: 3rem auto 0;
+            margin: 0 auto;
         }
         
         .value-card {
             text-align: center;
             padding: 2.5rem 1.5rem;
-            background: rgba(255,255,255,0.02);
+            background: var(--card-bg);
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
         
-        .value-card.animated {
-            opacity: 1;
-            transform: translateY(0);
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
         
         .value-card:hover {
-            background: rgba(102, 126, 234, 0.05);
-            border-color: rgba(102, 126, 234, 0.2);
             transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .value-card:hover::before {
+            opacity: 0.05;
         }
         
         .value-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-icon {
+            transform: scale(1.1);
         }
         
         .value-card h4 {
@@ -511,14 +482,27 @@
         }
         
         .value-card p {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             line-height: 1.7;
             font-size: 0.95rem;
         }
         
         .team-section {
             padding: 6rem 6%;
-            background: rgba(255,255,255,0.02);
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 0% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
         }
         
         .team-grid {
@@ -527,42 +511,63 @@
             gap: 2.5rem;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
         
         .team-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 20px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
         
-        .team-card.animated {
-            opacity: 1;
-            transform: translateY(0);
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
         
         .team-card:hover {
             transform: translateY(-10px);
             border-color: rgba(102, 126, 234, 0.3);
-            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+        
+        .team-card:hover::before {
+            opacity: 0.05;
         }
         
         .team-avatar {
             width: 120px;
             height: 120px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--primary-gradient);
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
-            border: 3px solid rgba(255,255,255,0.1);
+            border: 3px solid rgba(102, 126, 234, 0.2);
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover .team-avatar {
+            transform: scale(1.05);
+            border-color: rgba(102, 126, 234, 0.4);
         }
         
         .team-avatar img {
@@ -578,91 +583,122 @@
         }
         
         .team-card .role {
-            color: #667eea;
+            color: var(--accent);
             margin-bottom: 1rem;
             font-weight: 600;
             font-size: 0.95rem;
         }
         
         .team-card p {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.6;
         }
         
         footer {
-            background: rgba(10, 14, 39, 0.5);
+            background: var(--darker-bg);
             padding: 3rem 6%;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
         }
         
+        /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.15; }
-            50% { transform: scale(1.1); opacity: 0.25; }
+            0% { box-shadow: 0 4px 15px var(--shadow); }
+            50% { box-shadow: 0 4px 25px var(--glow); }
+            100% { box-shadow: 0 4px 15px var(--shadow); }
+        }
+        
+        /* Staggered animations for cards */
+        .value-card:nth-child(1) { animation-delay: 0.1s; }
+        .value-card:nth-child(2) { animation-delay: 0.2s; }
+        .value-card:nth-child(3) { animation-delay: 0.3s; }
+        .value-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .team-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-card:nth-child(2) { animation-delay: 0.2s; }
+        .team-card:nth-child(3) { animation-delay: 0.3s; }
+        .team-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Scroll animations */
+        .value-card, .team-card, .story-content, .story-image, .mission-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .value-card.visible, .team-card.visible, .story-content.visible, 
+        .story-image.visible, .mission-content.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         @media (max-width: 1200px) {
-            .ai-features-grid { grid-template-columns: repeat(2, 1fr); }
             .values-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
         }
         
         @media (max-width: 1024px) {
             .story-section { grid-template-columns: 1fr; }
+            .story-image { height: 400px; }
         }
         
         @media (max-width: 768px) {
             nav, .auth-btns { display: none; }
             .hamburger { display: flex; }
             .hero-section h1 { font-size: 2.5rem; }
-            .ai-features-grid, .values-grid, .team-grid { grid-template-columns: 1fr; }
-            .story-image { height: 400px; }
+            .values-grid, .team-grid { grid-template-columns: 1fr; }
             .mission-content { padding: 2.5rem; }
+            .section-header h2 { font-size: 2.2rem; }
+            .logo img { width: 2.5em; }
         }
         
         @media (max-width: 480px) {
-            .hero-section { padding: 8rem 6% 3rem; }
             .hero-section h1 { font-size: 2rem; }
-            .hero-section p { font-size: 1.1rem; }
-            .section-header h2 { font-size: 2.2rem; }
-            .story-content h2 { font-size: 2.2rem; }
-            .mission-content h2 { font-size: 2.2rem; }
-            .ai-card, .team-card { padding: 2rem; }
+            .story-content h2, .mission-content h2 { font-size: 2.2rem; }
+            .logo img { width: 2em; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"> <img src = "autobot-logo.png" alt ="" style = width:2em />
-        <nav>
-          <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="policy.html">Legal</a>
-        </nav>
-        <div class="auth-btns">
-            <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
-            <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
-        </div>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+               <img src="autobot-logo.png" alt="Autobotexpert Logo">
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="policy.html">Legal</a>
+            </nav>
+            <div class="auth-btns">
+                <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
+                <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
     <div class="mobile-nav">
-          <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="policy.html">Legal</a>            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="policy.html">Legal</a>
         <div class="mobile-auth-btns">
             <a href="https://autobots.pythonanywhere.com/signin" class="btn btn-login">Login</a>
             <a href="https://autobots.pythonanywhere.com/signup" class="btn btn-signup">Sign Up</a>
@@ -670,119 +706,35 @@
     </div>
 
     <section class="hero-section">
-        <h1>Pioneering <span class="gradient-text">AI-Powered</span> Crypto Trading</h1>
-        <p>Founded in 2019, Autobotexpert has revolutionized cryptocurrency trading by combining cutting-edge artificial intelligence with institutional-grade security, serving over 150,000 traders across 100+ countries worldwide.</p>
+        <h1> <span class="gradient-text">Pioneering Professional Investment Solutions</span> </h1>
+        <p>Founded in 2019, Autobotexpert has revolutionized cryptocurrency investing by combining cutting-edge technology with institutional-grade security, serving over 150,000 investors across 100+ countries worldwide.</p>
     </section>
 
     <section class="story-section">
         <div class="story-content">
             <h2>Our <span class="gradient-text">Story</span></h2>
-            <p>Autobotexpert was born from a simple vision: to democratize access to professional-grade cryptocurrency trading tools powered by artificial intelligence.</p>
-            <p>What started as a team of five blockchain enthusiasts in Silicon Valley has grown into a global platform processing over $2.5 billion in daily trading volume. Our AI-powered trading algorithms analyze millions of data points per second, providing our users with unprecedented market insights and automated trading capabilities.</p>
-            <p>Today, we're proud to be at the forefront of the crypto revolution, helping everyday traders compete with institutional investors through advanced technology and automated strategies.</p>
+            <p>Autobotexpert was born from a simple vision: to democratize access to professional-grade cryptocurrency trading tools and investment opportunities.</p>
+            <p>What started as a team of five financial technology enthusiasts in Silicon Valley has grown into a global platform processing over $2.5 billion in daily trading volume. Our advanced analytics and automated strategies provide users with unprecedented market insights.</p>
+            <p>Today, we're proud to be at the forefront of the digital asset revolution, helping everyday investors compete with institutional players through advanced technology and transparent pricing.</p>
         </div>
         <div class="story-image">
-            <div class="story-image-content">
-                <div class="icon">🚀</div>
-                <h3 style="font-size: 2rem; margin-bottom: 1rem;">5+ Years of Innovation</h3>
-                <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">Leading the crypto trading revolution since 2019</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="ai-section">
-        <div class="section-header">
-            <h2><span class="gradient-text">AI-Powered</span> Trading Intelligence</h2>
-            <p>Our proprietary artificial intelligence technology provides traders with automated strategies, real-time market analysis, and intelligent risk management—24/7.</p>
-        </div>
-        
-        <div class="ai-features-grid">
-            <div class="ai-card">
-                <div class="ai-icon">🤖</div>
-                <h3>Smart Trading Bots</h3>
-                <p>Deploy AI-powered trading bots that execute strategies automatically based on market conditions.</p>
-                <ul>
-                    <li>DCA (Dollar Cost Averaging)</li>
-                    <li>Grid Trading Strategies</li>
-                    <li>Arbitrage Opportunities</li>
-                    <li>Custom Algorithm Builder</li>
-                </ul>
-            </div>
-            
-            <div class="ai-card">
-                <div class="ai-icon">📈</div>
-                <h3>Predictive Analytics</h3>
-                <p>Machine learning models analyze historical data and market sentiment to forecast price movements.</p>
-                <ul>
-                    <li>Real-time Price Predictions</li>
-                    <li>Trend Analysis & Signals</li>
-                    <li>Market Sentiment Scoring</li>
-                    <li>Volatility Forecasting</li>
-                </ul>
-            </div>
-            
-            <div class="ai-card">
-                <div class="ai-icon">🛡️</div>
-                <h3>Risk Management AI</h3>
-                <p>Intelligent algorithms monitor your portfolio and automatically adjust positions to protect your capital.</p>
-                <ul>
-                    <li>Auto Stop-Loss Optimization</li>
-                    <li>Portfolio Rebalancing</li>
-                    <li>Drawdown Protection</li>
-                    <li>Position Size Calculator</li>
-                </ul>
-            </div>
-            
-            <div class="ai-card">
-                <div class="ai-icon">💡</div>
-                <h3>Signal Detection</h3>
-                <p>Our AI scans 200+ cryptocurrencies simultaneously to identify profitable trading opportunities.</p>
-                <ul>
-                    <li>Breakout Pattern Recognition</li>
-                    <li>Support/Resistance Levels</li>
-                    <li>Volume Spike Alerts</li>
-                    <li>Cross-Exchange Analysis</li>
-                </ul>
-            </div>
-            
-            <div class="ai-card">
-                <div class="ai-icon">⚡</div>
-                <h3>High-Frequency Trading</h3>
-                <p>Execute thousands of trades per second with our low-latency infrastructure and AI optimization.</p>
-                <ul>
-                    <li>Millisecond Execution</li>
-                    <li>Market Making Strategies</li>
-                    <li>Liquidity Optimization</li>
-                    <li>Smart Order Routing</li>
-                </ul>
-            </div>
-            
-            <div class="ai-card">
-                <div class="ai-icon">🎯</div>
-                <h3>Personalized Insights</h3>
-                <p>AI learns your trading style and provides customized recommendations to improve your performance.</p>
-                <ul>
-                    <li>Performance Analytics</li>
-                    <li>Strategy Optimization</li>
-                    <li>Learning Resources</li>
-                    <li>Behavioral Analysis</li>
-                </ul>
-            </div>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80" alt="Team collaboration">
         </div>
     </section>
 
     <section class="mission-section">
         <div class="mission-content">
-            <h2>Our <span class="gradient-text">Mission</span></h2>
-            <p>To empower every trader with institutional-grade AI technology that was once exclusive to Wall Street hedge funds and professional trading firms.</p>
-            <p>We believe that artificial intelligence shouldn't be a luxury—it should be accessible to everyone who wants to participate in the cryptocurrency revolution.</p>
-            <p>Through continuous innovation in machine learning, blockchain technology, and user experience, we're building the future of automated trading.</p>
+            <h2> <span class="gradient-text">Our Mission</span></h2>
+            <p>To empower every investor with institutional-grade technology that was once exclusive to Wall Street firms and professional trading operations.</p>
+            <p>We believe that advanced investment tools shouldn't be a luxury—they should be accessible to everyone who wants to participate in the digital economy.</p>
+            <p>Through continuous innovation in financial technology, security, and user experience, we're building the future of intelligent investing.</p>
         </div>
     </section>
 
     <section class="values-section">
         <div class="section-header">
             <h2>Our Core <span class="gradient-text">Values</span></h2>
+            <p>The principles that guide everything we do</p>
         </div>
         
         <div class="values-grid">
@@ -795,13 +747,13 @@
             <div class="value-card">
                 <div class="value-icon">🚀</div>
                 <h4>Innovation</h4>
-                <p>Constantly pushing boundaries with cutting-edge AI and blockchain technology.</p>
+                <p>Constantly pushing boundaries with cutting-edge technology and financial engineering.</p>
             </div>
             
             <div class="value-card">
                 <div class="value-icon">🤝</div>
                 <h4>Transparency</h4>
-                <p>Clear fees, honest communication, and full disclosure of AI algorithm performance.</p>
+                <p>Clear fees, honest communication, and full disclosure of platform performance metrics.</p>
             </div>
             
             <div class="value-card">
@@ -814,23 +766,23 @@
 
     <section class="team-section">
         <div class="section-header">
-            <h2>Meet Our <span class="gradient-text">Leadership</span></h2>
+            <h2><span class="gradient-text">Meet Our Leadership</span></h2>
             <p>Industry experts from finance, technology, and blockchain</p>
         </div>
         
         <div class="team-grid">
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Dr. Michael Chen">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format&fit=crop&q=80" alt="CEO">
                 </div>
                 <h4>Dr. Michael Chen</h4>
                 <div class="role">CEO & Co-Founder</div>
-                <p>PhD in AI/ML from MIT. Former quantitative trader at Goldman Sachs with 15+ years in algorithmic trading.</p>
+                <p>PhD in Finance from MIT. Former quantitative analyst at Goldman Sachs with 15+ years in algorithmic trading.</p>
             </div>
             
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Sarah Williams">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80" alt="CTO">
                 </div>
                 <h4>Sarah Williams</h4>
                 <div class="role">CTO & Co-Founder</div>
@@ -839,66 +791,29 @@
             
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="David Rodriguez">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" alt="Head of Research">
                 </div>
                 <h4>David Rodriguez</h4>
-                <div class="role">Head of AI Research</div>
-                <p>Machine learning specialist with 20+ patents in predictive analytics and financial modeling.</p>
+                <div class="role">Head of Research</div>
+                <p>Data science specialist with 20+ patents in predictive analytics and financial modeling.</p>
             </div>
             
             <div class="team-card">
                 <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Emily Thompson">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80" alt="CSO">
                 </div>
                 <h4>Emily Thompson</h4>
                 <div class="role">Chief Security Officer</div>
-                <p>Cybersecurity expert from NSA. Specializes in blockchain security and cryptographic systems.</p>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Prof. James Lee">
-                </div>
-                <h4>Prof. James Lee</h4>
-                <div class="role">Head of Quant Trading</div>
-                <p>Former Stanford professor. Developed proprietary trading algorithms for top hedge funds.</p>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1551836026-d5c88ac5d691?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Lisa Martinez">
-                </div>
-                <h4>Lisa Martinez</h4>
-                <div class="role">VP of Product</div>
-                <p>Product leader from Coinbase. Expert in crypto UX and building trader-centric platforms.</p>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Robert Chang">
-                </div>
-                <h4>Robert Chang</h4>
-                <div class="role">Chief Compliance Officer</div>
-                <p>Former SEC regulator ensuring full compliance across all jurisdictions.</p>
-            </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Anna Kowalski">
-                </div>
-                <h4>Anna Kowalski</h4>
-                <div class="role">Head of Operations</div>
-                <p>Operations specialist ensuring 99.9% uptime and seamless customer experience.</p>
+                <p>Cybersecurity expert with government background. Specializes in blockchain security and cryptography.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Autobotexpert. All rights reserved. | AI-Powered Trading Platform</p>
+        <p>&copy; 2025 Autobotexpert. All rights reserved. | Professional Investment Platform</p>
     </footer>
 
     <script>
-        // Mobile Navigation Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileNav = document.querySelector('.mobile-nav');
         
@@ -907,7 +822,6 @@
             mobileNav.classList.toggle('active');
         });
         
-        // Close mobile nav when clicking outside
         document.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
                 hamburger.classList.remove('active');
@@ -915,36 +829,32 @@
             }
         });
         
-        // Animate elements on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.story-content h2, .story-content p, .story-image, .section-header, .ai-card, .mission-content, .value-card, .team-card');
-            
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('animated');
-                }
-            });
-        };
-        
-        // Initial check for elements in view
-        animateOnScroll();
-        
-        // Check on scroll
-        window.addEventListener('scroll', animateOnScroll);
-        
-        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.style.background = 'rgba(10, 14, 39, 0.98)';
-                header.style.padding = '0.8rem 6%';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
             } else {
-                header.style.background = 'rgba(10, 14, 39, 0.95)';
-                header.style.padding = '1.2rem 6%';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
             }
+        });
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards and sections for animation
+        document.querySelectorAll('.value-card, .team-card, .story-content, .story-image, .mission-content').forEach(element => {
+            observer.observe(element);
         });
     </script>
 </body>
